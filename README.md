@@ -14,3 +14,7 @@ A compiler built with Python
 Following [Google style guide](https://google.github.io/styleguide/pyguide.html#Comments)
 
 
+### How to run
+
+Run "python main.py" with Python 2.7.9
+
