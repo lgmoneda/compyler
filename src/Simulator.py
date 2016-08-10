@@ -18,8 +18,11 @@ class Simulator(object):
 			value indicating if we'll print it 
 	"""
 	def __init__(self, verbose=True):
-		super(Simulador, self).__init__()
-		self.fileInput = None
+		super(Simulator, self).__init__()
+		self.granularity = "line"
+		self.inputFile = "../data/input1.txt"
+		self.input = []
+		self.outer_engine = OuterEngine("Outer Engine")
 		self.verboseOptions = {"Listing": verbose,
 						 	   "Block Track": verbose}
 		
@@ -33,7 +36,7 @@ class Simulator(object):
 			A boolean that if is True indicates the end of the simulation. 
 
 		"""
-		print "Choose your destiny: "
+		print "\nChoose your destiny: "
 		print "(a) Choose Input",
 		print "(b) Run Simulation",
 		if self.verboseOptions["Listing"]: 
@@ -44,22 +47,24 @@ class Simulator(object):
 			print "(d) Turn off block track", 
 		else: 
 			print "(d) Turn on block track", 
-		print "(e) Finish"
-
+		print "(e) Change granularity",
+		print "(f) Finish"
 
 		user_input = raw_input()
 		return self.treatUserInput(user_input)
 	
 	def treatUserInput(self, userInput):
-		if event == "a":
+		if userInput == "a":
 			self.askForInput()
-		if event == "b":
+		if userInput == "b":
 			self.simulate()
-		if event == "c":
-			pass
-		if event == "d":
-			pass
-		if event == "e":
+		if userInput == "c":
+			self.switchVerboseOption("Listing")
+		if userInput == "d":
+			self.switchVerboseOption("Block Track")
+		if userInput == "e":
+			self.granularityChange()
+		if userInput == "f":
 			return self.finishSimulation()
 
 		return False
@@ -75,11 +80,12 @@ class Simulator(object):
 		Returns:
 			updated verboseOptions
 		"""
-		self.verboseOptions[key] = not value
+		self.verboseOptions[key] = not self.verboseOptions[key]
+		self.printVerboseOptions()
 
 	def printVerboseOptions(self):
-		print "Track Options: "
-		for key, value in verboseOptions.iteritems():
+		print "\nTrack Options: "
+		for key, value in self.verboseOptions.iteritems():
 			print key + ": ",
 			if value:
 				print "On"
@@ -103,8 +109,36 @@ class Simulator(object):
 	def askForFileName(self):
 		"""Ask user for the input file name
 		"""
-		self.fileInput = raw_input("Inform the input file name: ")
+		self.inputFile = raw_input("\nInform the input file name: ")
 
+	def granularityChange(self):
+		"""Asks for granularity definition
+		"""
+		print "\nWorking granularity: " + self.granularity
+		print "Define as: "
+		answer = raw_input("(a) Line (b) Word (c) Character: ")
+
+		options = {"a": "line", "b": "word", "c": "char"}
+		self.granularity = options.get(answer, "line") 
+
+
+	def createInitialInput(self):
+		self.input = []
+		with open(self.inputFile) as f:
+			for line in f:
+				if self.granularity == "line":
+					#Taking out the \n from line
+					line = line.replace("\n", "")
+					self.input.append(line)
+				if self.granularity == "word":
+					for word in line.split():
+						self.input.append(word)
+				if self.granularity == "char":
+					for word in line.split():
+						for char in word:
+							self.input.append(char)
 
 	def simulate(self):
-		return outerEngine.run(self.fileInput)
+		self.createInitialInput()
+		self.outer_engine.setup(self.input, self.granularity, self.verboseOptions)
+		return self.outer_engine.run()
