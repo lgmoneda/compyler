@@ -62,7 +62,13 @@ class Simulator(object):
 		else: 
 			print "(d) Turn on block track", 
 		print "(e) Change granularity",
-		print "(f) Finish"
+		print "(f) Step Process",
+		if self.verboseOptions["Event Track"]: 
+			print "(g) Turn off event track", 
+		else: 
+			print "(g) Turn on event track", 
+		print "(z) Finish"
+		
 
 		user_input = raw_input()
 		return self.treatUserInput(user_input)
@@ -85,8 +91,12 @@ class Simulator(object):
 			self.switchVerboseOption("Block Track")
 		if userInput == "e":
 			self.granularityChange()
-		if userInput == "f":
+		if userInput == "z":
 			return self.finishSimulation()
+		if userInput == "f":
+			self.stepSimulate()
+		if userInput == "g":
+			self.switchVerboseOption("Event Track")
 
 		return False
 
@@ -183,5 +193,22 @@ class Simulator(object):
 			if not engine.run():
 				return False
 			input_ = engine.getOutput()
+		print "Successful simulation."
+		return True
+
+	def stepSimulate(self):
+		"""Process the input file one unit each time
+		"""
+		self.createInitialInput()
+		while len(self.input) != 0:
+			input_ = self.input[0]
+			self.input = self.input[1:]
+			for engine in self.engines:
+				engine.setup(input_, self.granularity, self.verboseOptions)
+				if not engine.run():
+					return False
+				input_ = engine.getOutput()
+			raw_input("Press any button to process the next unit...")
+
 		print "Successful simulation."
 		return True

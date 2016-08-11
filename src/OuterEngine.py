@@ -8,27 +8,6 @@ class OuterEngine(Engine):
 		self.verboseAction = {"Listing": "self.listing()",
 							  "Block Track": "self.blockTrack()"}
 
-
-
-	#def setup(self, inputs_, gran, verbOpt):
-	#	self.eventsList = list()
-	#	self.inputs = inputs_
-	#	self.granularity = gran
-	#	self.verboseOptions = verbOpt 
-
-	def input(self):
-		pass
-
-	#def run(self):
-	#
-	#	self.verboseAction = {"Listing": "self.listing()",
-	#						  "Block Track": "self.blockTrack()"}
-	#	self.blockTrack()
-	#	self.initialEvents()
-	#	for key, value in self.verboseOptions.iteritems():
-	#		if value:
-	#			exec self.verboseAction[key]
-
 	def listing(self):
 		print "\n"
 		for event in self.eventsList:
@@ -49,29 +28,20 @@ class OuterEngine(Engine):
 				print hex(ord(event["content"]))
 
 	def eventListing(self, event):
-		#print "\n"
-		print str(event["id"]) + " ",
-		if self.granularity != "char": 
-			print event["content"]
-		else:
-			print event["content"] + " ",
-
+		print '{0: <5}'.format(event["id"]),
+		if self.granularity == "char":
+			print '{0: <3}'.format(event["content"]), 
 			if ord(event["content"]) in range(65, 91) or (ord(event["content"]) - 32) in range(65, 91):
-				print "letter ",
+				print '{0: <10}'.format("letter"),
 			else:
 				if ord(event["content"]) in range(48, 58):
-					print "numerical ",
+					print '{0: <10}'.format("numerical"),
 				else:
-					print "special ",
-			print str(ord(event["content"])) + " ",
-			print hex(ord(event["content"]))
-
-
-	def verbose(self):
-		for key, value in self.verboseOptions.iteritems():
-			if value:
-				exec self.verboseAction[key]
-
+					print '{0: <10}'.format("special"),
+			print '{0: <5}'.format(ord(event["content"])),
+			print '{0: <5}'.format(hex(ord(event["content"])))
+		else:
+			print '{0: <3}'.format(event["content"])
 
 	def event1Handler(self, event):
 		if self.verboseOptions["Listing"]: self.eventListing(event)

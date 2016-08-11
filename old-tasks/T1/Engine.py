@@ -67,19 +67,28 @@ class Engine(object):
 
 		The starter function to a event-based simulation. We need to define the first
 		events to populate the event list. It read each content in the input_ and turns
-		it into an event.
+		it into an event. We need to take care with the case where the self.inputs is,
+		in fact, a single input.
 
 		Returns:
 			None
 		"""
 		order = 1
-		for input_ in self.inputs:
+		if type(self.inputs) == list:
+			for input_ in self.inputs:
+				new_event = dict(Engine.event)
+				new_event["id"] = order
+				new_event["type"] = 1
+				new_event["content"] = input_
+				self.eventsList.append(new_event)
+				order += 1
+		else:
 			new_event = dict(Engine.event)
 			new_event["id"] = order
 			new_event["type"] = 1
-			new_event["content"] = input_
+			new_event["content"] = self.inputs
 			self.eventsList.append(new_event)
-			order += 1
+
 		self.inputs = list()
 
 	def scheduler(self):
