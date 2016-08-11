@@ -1,5 +1,7 @@
 from OuterEngine import OuterEngine
-
+from FrontEngine import FrontEngine
+from SemanticEngine import SemanticEngine
+from BackEngine import BackEngine
 
 class Simulator(object):
 	"""The simulation and user interaction manager, the Simulator!
@@ -8,23 +10,35 @@ class Simulator(object):
 	between many track options, to define input file, run the simulation and
 	terminate it.
 
-	It won't be event based, it just starts the outer engine that will.
+	It won't be event based, it just holds the engines that will. It can be considered
+	the outer box in the schema given, the big compiler box. Contains all the small
+	boxes (engines) that process the input in each stage.
 
 	Args:
 		verbose: A boolean indicating the initial state of all verbose options
 
 	Attributes:
+		granularity: specifies the treatable unit, it can be line, word or character.
 		verboseOptions: A dict with many tracking options as keys and a boolean
-			value indicating if we'll print it 
+			value indicating if we'll print it .
+		inputFile: the input file name and location.
+		input: the input after reading it from file.
+		engines: the list of engines the compiler contains inside. 
 	"""
 	def __init__(self, verbose=True):
 		super(Simulator, self).__init__()
 		self.granularity = "line"
 		self.inputFile = "../data/input1.txt"
 		self.input = []
-		self.outer_engine = OuterEngine("Outer Engine")
+		self.engines = []
+		self.engines.append(OuterEngine("Outer Engine"))
+		self.engines.append(FrontEngine("FrontEnd"))
+		self.engines.append(SemanticEngine("Semantic"))
+		self.engines.append(BackEngine("BackEnd"))
+
 		self.verboseOptions = {"Listing": verbose,
-						 	   "Block Track": verbose}
+						 	   "Block Track": verbose,
+						 	   "Event Track": verbose}
 		
 	def showOptionsWait(self):
 		"""Shows a menu option
@@ -54,6 +68,13 @@ class Simulator(object):
 		return self.treatUserInput(user_input)
 	
 	def treatUserInput(self, userInput):
+		"""decide which action respond user input
+
+		Call a method to treat the user input. 
+
+		Args:
+			userInput: the character the user typed and raw_input has captured.
+		"""
 		if userInput == "a":
 			self.askForInput()
 		if userInput == "b":
@@ -84,6 +105,8 @@ class Simulator(object):
 		self.printVerboseOptions()
 
 	def printVerboseOptions(self):
+		"""Display verbose options for simulation
+		"""
 		print "\nTrack Options: "
 		for key, value in self.verboseOptions.iteritems():
 			print key + ": ",
@@ -93,7 +116,7 @@ class Simulator(object):
 				print "Off"
 
 	def finishSimulation(self):
-		"""
+		"""Terminates simulation
 		"""
 		return True
 
@@ -123,6 +146,11 @@ class Simulator(object):
 
 
 	def createInitialInput(self):
+		"""Opens input file and turn it into input
+
+		Depending on the granularity, constructs the input reading the input 
+		file indicated by the user.
+		"""
 		self.input = []
 		with open(self.inputFile) as f:
 			for line in f:
@@ -139,6 +167,21 @@ class Simulator(object):
 							self.input.append(char)
 
 	def simulate(self):
+		"""Starts the simulation
+
+		Create the initial input from the file and feeds the first engine.
+		Then, make all of them run and feed each other, being the input from
+		a given engine the output from the previous one.
+
+		Returns:
+			A boolean indicating or not the success of the simulation.
+		"""
 		self.createInitialInput()
-		self.outer_engine.setup(self.input, self.granularity, self.verboseOptions)
-		return self.outer_engine.run()
+		input_ = self.input
+		for engine in self.engines:
+			engine.setup(input_, self.granularity, self.verboseOptions)
+			if not engine.run():
+				return False
+			input_ = engine.getOutput()
+		print "Successful simulation."
+		return True
