@@ -1,5 +1,7 @@
 from OuterEngine import OuterEngine
-
+from FrontEngine import FrontEngine
+from SemanticEngine import SemanticEngine
+from BackEngine import BackEngine
 
 class Simulator(object):
 	"""The simulation and user interaction manager, the Simulator!
@@ -22,9 +24,21 @@ class Simulator(object):
 		self.granularity = "line"
 		self.inputFile = "../data/input1.txt"
 		self.input = []
-		self.outer_engine = OuterEngine("Outer Engine")
+
+		#self.outer_engine = OuterEngine("Outer Engine")
+		#self.front_engine = FrontEngine("FrontEnd")
+		#self.semantic_engine = SemanticEngine("Semantic")
+		#self.back_engine = BackEngine("BackEnd")
+
+		self.engines = []
+		self.engines.append(OuterEngine("Outer Engine"))
+		self.engines.append(FrontEngine("FrontEnd"))
+		self.engines.append(SemanticEngine("Semantic"))
+		self.engines.append(BackEngine("BackEnd"))
+
 		self.verboseOptions = {"Listing": verbose,
-						 	   "Block Track": verbose}
+						 	   "Block Track": verbose,
+						 	   "Event Track": verbose}
 		
 	def showOptionsWait(self):
 		"""Shows a menu option
@@ -140,5 +154,10 @@ class Simulator(object):
 
 	def simulate(self):
 		self.createInitialInput()
-		self.outer_engine.setup(self.input, self.granularity, self.verboseOptions)
-		return self.outer_engine.run()
+		input_ = self.input
+		for engine in self.engines:
+			engine.setup(input_, self.granularity, self.verboseOptions)
+			if not engine.run():
+				return False
+			input_ = engine.getOutput()
+		print "Encerrou simulacao"

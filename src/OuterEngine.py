@@ -1,29 +1,33 @@
 from Engine import Engine
 
+
 class OuterEngine(Engine):
 
 	def __init__(self, name):
 		super(OuterEngine, self).__init__(name)
-		print "funciona"
+		self.verboseAction = {"Listing": "self.listing()",
+							  "Block Track": "self.blockTrack()"}
 
-	def setup(self, inputs_, gran, verbOpt):
-		self.eventsList = list()
-		self.inputs = inputs_
-		self.granularity = gran
-		self.verboseOptions = verbOpt 
+
+
+	#def setup(self, inputs_, gran, verbOpt):
+	#	self.eventsList = list()
+	#	self.inputs = inputs_
+	#	self.granularity = gran
+	#	self.verboseOptions = verbOpt 
 
 	def input(self):
 		pass
 
-	def run(self):
-
-		self.verboseAction = {"Listing": "self.listing()",
-							  "Block Track": "self.blockTrack()"}
-		self.blockTrack()
-		self.initialEvents()
-		for key, value in self.verboseOptions.iteritems():
-			if value:
-				exec self.verboseAction[key]
+	#def run(self):
+	#
+	#	self.verboseAction = {"Listing": "self.listing()",
+	#						  "Block Track": "self.blockTrack()"}
+	#	self.blockTrack()
+	#	self.initialEvents()
+	#	for key, value in self.verboseOptions.iteritems():
+	#		if value:
+	#			exec self.verboseAction[key]
 
 	def listing(self):
 		print "\n"
@@ -43,4 +47,34 @@ class OuterEngine(Engine):
 						print "special ",
 				print str(ord(event["content"])) + " ",
 				print hex(ord(event["content"]))
+
+	def eventListing(self, event):
+		#print "\n"
+		print str(event["id"]) + " ",
+		if self.granularity != "char": 
+			print event["content"]
+		else:
+			print event["content"] + " ",
+
+			if ord(event["content"]) in range(65, 91) or (ord(event["content"]) - 32) in range(65, 91):
+				print "letter ",
+			else:
+				if ord(event["content"]) in range(48, 58):
+					print "numerical ",
+				else:
+					print "special ",
+			print str(ord(event["content"])) + " ",
+			print hex(ord(event["content"]))
+
+
+	def verbose(self):
+		for key, value in self.verboseOptions.iteritems():
+			if value:
+				exec self.verboseAction[key]
+
+
+	def event1Handler(self, event):
+		self.eventListing(event)
+		self.outputs.append(event["content"])
+		self.eventsList.pop(0)
 
