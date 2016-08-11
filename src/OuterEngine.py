@@ -74,7 +74,7 @@ class OuterEngine(Engine):
 
 
 	def event1Handler(self, event):
-		self.eventListing(event)
+		if self.verboseOptions["Listing"]: self.eventListing(event)
 		self.outputs.append(event["content"])
 		self.eventsList.pop(0)
 
