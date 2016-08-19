@@ -82,7 +82,7 @@ class Simulator(object):
 			userInput: the character the user typed and raw_input has captured.
 		"""
 		if userInput == "a":
-			self.askForInput()
+			self.askForFileName()
 		if userInput == "b":
 			self.simulate()
 		if userInput == "c":
@@ -142,7 +142,7 @@ class Simulator(object):
 	def askForFileName(self):
 		"""Ask user for the input file name
 		"""
-		self.inputFile = raw_input("\nInform the input file name: ")
+		self.inputFile = "../data/" + raw_input("\nInform the input file name: ")
 
 	def granularityChange(self):
 		"""Asks for granularity definition

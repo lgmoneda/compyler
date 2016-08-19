@@ -1,0 +1,9 @@
+ABRA
+INT x = 20
+INT y = 20 + 30
+IF x < y THEN x = 1
+$ Esse eh um laco do programa $
+FOR x = 1 TO 10
+    INT caneca = 5
+    PRINT "teste"
+KADABRA
