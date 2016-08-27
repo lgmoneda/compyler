@@ -62,6 +62,24 @@ class Engine(object):
 	def readInput(self):
 		pass
 
+	def insertNewEvent(self, order, type_, content):
+		"""Create a new event and insert in queue
+
+		Args:
+			order: event order in the queue
+			type: an int informing the type of the new event
+			content: anything that the engine could treat, usually a string
+
+		Returns:
+			None
+		"""
+		new_event = dict(Engine.event)
+		new_event["id"] = order
+		new_event["type"] = type_
+		new_event["content"] = content
+		self.eventsList.append(new_event)
+
+
 	def initialEvents(self):
 		"""Reads the input and create the first events
 
@@ -119,6 +137,7 @@ class Engine(object):
 		#print "Entrou no bloco " + self.name
 		while len(self.eventsList) != 0:
 			self.scheduler()
+			self.eventsList = sorted(self.eventsList, key=lambda k: k["id"])
 		#print "Saiu do bloco " + self.name
 		if self.verboseOptions["Block Track"]: self.blockTrack()
 		self.finalPrint()

@@ -1,7 +1,9 @@
 from OuterEngine import OuterEngine
 from FrontEngine import FrontEngine
+from LexicalAnalysis import LexicalAnalysis
 from SemanticEngine import SemanticEngine
 from BackEngine import BackEngine
+import re
 
 class Simulator(object):
 	"""The simulation and user interaction manager, the Simulator!
@@ -27,18 +29,19 @@ class Simulator(object):
 	"""
 	def __init__(self, verbose=True):
 		super(Simulator, self).__init__()
-		self.granularity = "line"
-		self.inputFile = "../data/input1.txt"
+		self.granularity = "char"
+		self.inputFile = "../data/prog1.txt"
 		self.input = []
 		self.engines = []
 		self.engines.append(OuterEngine("Outer Engine"))
-		self.engines.append(FrontEngine("FrontEnd"))
+		self.engines.append(LexicalAnalysis("Lexical Analysis"))
+		#self.engines.append(FrontEngine("FrontEnd"))
 		self.engines.append(SemanticEngine("Semantic"))
 		self.engines.append(BackEngine("BackEnd"))
 
 		self.verboseOptions = {"Listing": verbose,
 						 	   "Block Track": verbose,
-						 	   "Event Track": verbose}
+						 	   "Event Track": True}
 		
 	def showOptionsWait(self):
 		"""Shows a menu option
@@ -172,7 +175,8 @@ class Simulator(object):
 					for word in line.split():
 						self.input.append(word)
 				if self.granularity == "char":
-					for word in line.split():
+					for word in re.split(r'(\s+)', line):
+					#for word in line.split(""):
 						for char in word:
 							self.input.append(char)
 
@@ -193,6 +197,7 @@ class Simulator(object):
 			if not engine.run():
 				return False
 			input_ = engine.getOutput()
+			print input_
 		print "Successful simulation."
 		return True
 

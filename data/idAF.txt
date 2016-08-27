@@ -1,0 +1,4 @@
+s0
+s0 letter *s1
+s1 letter *s1
+s1 digit *s1
