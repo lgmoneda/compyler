@@ -1,0 +1,3 @@
+s0
+s0 special *s1
+s1 special *s1
