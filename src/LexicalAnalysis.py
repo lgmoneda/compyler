@@ -23,19 +23,20 @@ class LexicalAnalysis(Engine):
 	
 	def event1Handler(self, event):
 		if event["content"]["value"] != " " and event["content"]["value"] != "\n":
-			self.buffer.append(event["content"]["type"])
+			#self.buffer.append(event["content"]["type"])
+			self.buffer.append(event["content"])
 			self.bufferWord.append(event["content"]["value"])
 			if self.automata == None:
 				if event["content"]["type"] == "letter":
 					#self.automata = AutomatoFinito(False, name="identifier", nome_arquivo="../data/idAF.txt")
-					self.automata = FiniteAutomata(name="identifier", def_file="../data/idAF.txt")
+					self.automata = FiniteAutomata(name="identifier", def_file="../data/idAF.txt", key="type")
 				else:
 					if event["content"]["type"] == "numerical":
 						#self.automata = AutomatoFinito(False, name="numerical", nome_arquivo="../data/numAF.txt")
-						self.automata = FiniteAutomata(name="numerical", def_file="../data/numAF.txt")
+						self.automata = FiniteAutomata(name="numerical", def_file="../data/numAF.txt", key="type")
 					else:
 						#self.automata = AutomatoFinito(False, name="symbol", nome_arquivo="../data/speAF.txt")
-						self.automata = FiniteAutomata(name="symbol", def_file="../data/speAF.txt")
+						self.automata = FiniteAutomata(name="symbol", def_file="../data/speAF.txt", key="type")
 		else:
 			if len(self.buffer) != 0:
 				self.insertNewEvent(0, 2, self.buffer)

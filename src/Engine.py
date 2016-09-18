@@ -62,6 +62,9 @@ class Engine(object):
 	def readInput(self):
 		pass
 
+	def setEventsList(self, eventsList):
+		self.eventsList = eventsList
+
 	def insertNewEventFirstOrLast(self, type_, content, last=True):
 		"""Create a new event and insert in queue
 
@@ -160,6 +163,8 @@ class Engine(object):
 		#print "Entrou no bloco " + self.name
 		while len(self.eventsList) != 0:
 			result = self.scheduler()
+			if result == "break":
+				break
 			self.eventsList = sorted(self.eventsList, key=lambda k: k["id"])
 		#print "Saiu do bloco " + self.name
 		if self.verboseOptions["Block Track"]: self.blockTrack()
