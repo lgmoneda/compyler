@@ -1,0 +1,5 @@
+ABRA
+INT x = 200000000000000
+nomedevariavelgigante33comnumeros33nomeio = 300
+INTao = 1
+KADABRA
