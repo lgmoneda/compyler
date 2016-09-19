@@ -31,14 +31,14 @@ class LexicalAnalysis(Engine):
 			if self.automata == None:
 				if event["content"]["type"] == "letter":
 					#self.automata = AutomatoFinito(False, name="identifier", nome_arquivo="../data/idAF.txt")
-					self.automata = FiniteAutomata(name="identifier", def_file="../data/idAF.txt", key="type")
+					self.automata = FiniteAutomata(name="NT", def_file="../data/idAF.txt", key="type")
 				else:
-					if event["content"]["type"] == "numerical":
+					if event["content"]["type"] == "special" and event["content"]["value"] == "\xe2":
 						#self.automata = AutomatoFinito(False, name="numerical", nome_arquivo="../data/numAF.txt")
-						self.automata = FiniteAutomata(name="numerical", def_file="../data/numAF.txt", key="type")
+						self.automata = FiniteAutomata(name="TERM", def_file="../data/quoted_symbolAF.txt", key="type")
 					else:
 						#self.automata = AutomatoFinito(False, name="symbol", nome_arquivo="../data/speAF.txt")
-						self.automata = FiniteAutomata(name="symbol", def_file="../data/speAF.txt", key="type")
+						self.automata = FiniteAutomata(name=event["content"]["value"], def_file="../data/speAF.txt", key="type")
 		else:
 			if len(self.buffer) != 0:
 				self.insertNewEvent(0, 2, self.buffer)
