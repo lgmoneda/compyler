@@ -21,8 +21,12 @@ class SyntacticEngine(Engine):
 		#print self.granularity
 		#print self.verboseOptions
 		result = (self.automata.run(), self.buffer)
+		self.setOutput(self.automata.getOutput())
+		#self.outputs.append(self.buffer)
 		self.eventsList = []
-		return True
+		if result[0]:
+			print "Entrada esta na forma de uma gramatica de Wirth."
+		return result[0]
 		
 
 	def event2Handler(self, event):

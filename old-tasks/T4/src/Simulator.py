@@ -196,10 +196,12 @@ class Simulator(object):
 		input_ = self.input
 		for engine in self.engines:
 			engine.setup(input_, self.granularity, self.verboseOptions)
+
 			if not engine.run():
 				return False
 			input_ = engine.getOutput()
-			print input_
+			#print "inputs -> outputs"
+			#print input_
 
 		for item in input_:
 			#print item

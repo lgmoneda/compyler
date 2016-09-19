@@ -41,6 +41,8 @@ class PushdownAutomata(Engine):
 
 		self.submachines[0].setEventsList(self.eventsList)
 		result = self.submachines[0].run()
+		#self.setOutput(self.submachines[0].getOutput())
+		self.outputs.append(event["content"])
 		print result
 		self.setEventsList(list())
 		return result
