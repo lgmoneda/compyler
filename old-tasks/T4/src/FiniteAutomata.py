@@ -77,8 +77,8 @@ class FiniteAutomata(Engine):
 	def event1Handler(self, event):	
 		self.eventsList.pop(0)
 		transition_found = False
-		print "Evento: "
-		print event["content"]
+		print "Event: ",
+		print event
 
 		#print self.activity["current state"]
 		#print 
@@ -119,8 +119,9 @@ class FiniteAutomata(Engine):
 		nextMachine.activity["current state"] = nextMachine.description["initial"] 
 		#nextMachine.setEventsList(self.eventsList)
 		result = nextMachine.run() 
-		print "Result ",
-		print result
+		#print "Result ",
+		#print result
+		print "Returning to the " + self.name + " machine."
 		if result: 
 			self.setEventsList(nextMachine.getOutput())
 			#print self.eventsList
@@ -131,10 +132,10 @@ class FiniteAutomata(Engine):
 
 	#Sem transicao, limpo os eventos e termino
 	def event4Handler(self, event):
-		print "estado corrente: ",
-		print self.activity["current state"]
+		#print "estado corrente: ",
+		#print self.activity["current state"]
 		self.eventsList.pop(0)
-		print "No transition found"
+		#print "No transition found."
 		self.outputs = copy.deepcopy(self.eventsList)
 		self.eventsList = []
 		self.insertNewEventFirstOrLast(content=event["content"], type_=5)

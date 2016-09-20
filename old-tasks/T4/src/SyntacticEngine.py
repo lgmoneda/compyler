@@ -7,7 +7,7 @@ class SyntacticEngine(Engine):
 
 	def __init__(self, name):
 		super(SyntacticEngine, self).__init__(name)
-		self.automata = PushdownAutomata("Wirth Grammar", "../data/wirth_grammarAP.txt", "category") 
+		self.automata = PushdownAutomata("Pushdown Automata for Wirth Grammar", "../data/wirth_grammarAP.txt", "category") 
 		self.buffer = []
 		self.bufferWord = []
 
@@ -25,7 +25,9 @@ class SyntacticEngine(Engine):
 		#self.outputs.append(self.buffer)
 		self.eventsList = []
 		if result[0]:
-			print "Entrada esta na forma de uma gramatica de Wirth."
+			print "The given grammar is in Wirth notation."
+		else:
+			print "The given grammar is NOT in Wirth notation."
 		return result[0]
 		
 

@@ -38,8 +38,12 @@ class PushdownAutomata(Engine):
 			#print submachine.description
 			#print submachine.verboseOptions
 
+		mainmachine_input = []
+		for event_ in self.eventsList:
+			mainmachine_input.append(event_["content"])
+		self.submachines[0].setup(mainmachine_input, self.granularity, self.verboseOptions)
+		#####self.submachines[0].setEventsList(self.eventsList)
 
-		self.submachines[0].setEventsList(self.eventsList)
 		result = self.submachines[0].run()
 		#self.setOutput(self.submachines[0].getOutput())
 		self.outputs.append(event["content"])

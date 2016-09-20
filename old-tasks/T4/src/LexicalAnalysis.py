@@ -1,5 +1,4 @@
 from Engine import Engine
-from Automatons.simulador_logica import AutomatoFinito
 from FiniteAutomata import FiniteAutomata
 
 class LexicalAnalysis(Engine):
