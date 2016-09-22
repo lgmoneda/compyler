@@ -1,7 +1,6 @@
 from OuterEngine import OuterEngine
 from FrontEngine import FrontEngine
 from LexicalAnalysis import LexicalAnalysis
-from SyntacticEngine import SyntacticEngine
 from SemanticEngine import SemanticEngine
 from BackEngine import BackEngine
 import re
@@ -31,12 +30,11 @@ class Simulator(object):
 	def __init__(self, verbose=True):
 		super(Simulator, self).__init__()
 		self.granularity = "char"
-		self.inputFile = "../data/grammar.txt"
+		self.inputFile = "../data/prog2.txt"
 		self.input = []
 		self.engines = []
 		self.engines.append(OuterEngine("Outer Engine"))
 		self.engines.append(LexicalAnalysis("Lexical Analysis"))
-		self.engines.append(SyntacticEngine("Syntactic Analysis"))
 		#self.engines.append(FrontEngine("FrontEnd"))
 		self.engines.append(SemanticEngine("Semantic"))
 		self.engines.append(BackEngine("BackEnd"))
@@ -196,12 +194,10 @@ class Simulator(object):
 		input_ = self.input
 		for engine in self.engines:
 			engine.setup(input_, self.granularity, self.verboseOptions)
-
 			if not engine.run():
 				return False
 			input_ = engine.getOutput()
-			#print "inputs -> outputs"
-			#print input_
+			print input_
 
 		for item in input_:
 			#print item

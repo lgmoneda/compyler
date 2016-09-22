@@ -1,5 +1,4 @@
 from Engine import Engine
-import copy
 
 class FiniteAutomata(Engine):
 	"""Finite Automata model
@@ -77,11 +76,6 @@ class FiniteAutomata(Engine):
 	def event1Handler(self, event):	
 		self.eventsList.pop(0)
 		transition_found = False
-		print "Event: ",
-		print event
-
-		#print self.activity["current state"]
-		#print 
 		for transition in self.description["transitions"]:
 				if transition.get('current') == self.activity["current state"]: 
 					if transition.get('input') == event["content"][self.key]:
@@ -90,13 +84,12 @@ class FiniteAutomata(Engine):
 						#self.eventsList.pop(0)
 					else:
 						#Call submachine
-						for submachine in self.submachines:
-							if transition.get('input') == submachine.name:
-								self.insertNewEventFirstOrLast(
-									type_=3, content=transition.get('input'), last=False)
-								self.activity["current state"] = transition.get('next')
-								transition_found = True
-								#self.eventsList.pop(0)
+						if transition.get('input') in self.submachines:
+							self.insertNewEventFirstOrLast(
+								type_=3, content=transition.get('input'), last=False)
+							self.activity["current state"] = transition.get('next')
+							transition_found = True
+							#self.eventsList.pop(0)
 
 
 		if transition_found == False:
@@ -109,22 +102,16 @@ class FiniteAutomata(Engine):
 	#Chamada de submaquina
 	def event3Handler(self, event):
 		self.eventsList.pop(0)
-		nextInput = []
 		for submachine in self.submachines:
 			if submachine.name == event["content"]: 
-				nextMachine = copy.deepcopy(submachine)
+				nextMachine = submachine
 		for event_ in self.eventsList:
 			nextInput.append(event_["content"])
-		nextMachine.setup(nextInput, self.granularity, self.verboseOptions)
-		nextMachine.activity["current state"] = nextMachine.description["initial"] 
+		nextMachine.setup(nextInput)
 		#nextMachine.setEventsList(self.eventsList)
 		result = nextMachine.run() 
-		#print "Result ",
-		#print result
-		print "Returning to the " + self.name + " machine."
 		if result: 
-			self.setEventsList(nextMachine.getOutput())
-			#print self.eventsList
+			self.setEventsList(nextMachine.getOutputs)
 		else:
 			self.eventsList = []
 			return False
@@ -132,11 +119,9 @@ class FiniteAutomata(Engine):
 
 	#Sem transicao, limpo os eventos e termino
 	def event4Handler(self, event):
-		#print "estado corrente: ",
-		#print self.activity["current state"]
 		self.eventsList.pop(0)
-		#print "No transition found."
-		self.outputs = copy.deepcopy(self.eventsList)
+		print "No transition found"
+		self.outputs = self.eventsList
 		self.eventsList = []
 		self.insertNewEventFirstOrLast(content=event["content"], type_=5)
 

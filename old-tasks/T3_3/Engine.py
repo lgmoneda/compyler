@@ -38,9 +38,6 @@ class Engine(object):
 		self.name = name
 		self.inputs = []
 		self.outputs = []
-		self.granularity = None
-		self.verboseOptions = None
-
 
 	def setup(self, inputs_, gran, verbOpt):
 		"""Setup the engine
@@ -83,9 +80,9 @@ class Engine(object):
 		if len(self.eventsList) != 0:
 			if last:
 				#order = self.eventsList[-1]["id"] + 1
-				order =  max(self.eventsList, key=lambda k: k["id"])["id"] + 1
+				order =  max(self.eventsList, key=lambda k: k["id"]) + 1
 			else:
-				order =  min(self.eventsList, key=lambda k: k["id"])["id"] - 1
+				order =  min(self.eventsList, key=lambda k: k["id"]) - 1
 				#order = self.eventsList[0]["id"] - 1
 			self.insertNewEvent(order, type_, content)
 		else:
@@ -165,11 +162,10 @@ class Engine(object):
 		self.initialEvents()
 		#print "Entrou no bloco " + self.name
 		while len(self.eventsList) != 0:
-			self.eventsList = sorted(self.eventsList, key=lambda k: k["id"])
 			result = self.scheduler()
 			if result == "break":
 				break
-			#self.eventsList = sorted(self.eventsList, key=lambda k: k["id"])
+			self.eventsList = sorted(self.eventsList, key=lambda k: k["id"])
 		#print "Saiu do bloco " + self.name
 		if self.verboseOptions["Block Track"]: self.blockTrack()
 		self.finalPrint()
@@ -201,7 +197,4 @@ class Engine(object):
 
 	def getOutput(self):
 		return self.outputs
-
-	def setOutput(self, out):
-		self.outputs = out
 
