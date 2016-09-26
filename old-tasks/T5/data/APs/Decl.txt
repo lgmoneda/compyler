@@ -1,0 +1,10 @@
+Decl
+0
+0 INT 2
+2 Var 3
+3 vazio 4
+3 = 5
+5 Exp 6
+6 vazio 4
+4 . *1
+@

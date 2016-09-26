@@ -1,0 +1,9 @@
+Program
+0
+0 ABRA 2
+2 vazio 3
+3 Block 4
+4 vazio 3
+3 KADABRA 4
+4 . *1
+@

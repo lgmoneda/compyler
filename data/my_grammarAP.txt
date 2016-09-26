@@ -1,0 +1,401 @@
+16
+Program
+0
+0 ABRA 2
+2 ABRA 3
+3 vazio 4
+4 Block 5
+5 Block 6
+6 vazio 4
+4 KADABRA 5
+5 . *1
+@
+Assign
+0
+0 Var 2
+2 Var 3
+3 = 4
+4 Exp 5
+5 . *1
+@
+Block
+0
+0 Decl 2
+2 Decl 3
+3 vazio *1
+0 Assign 5
+5 Assign 6
+6 vazio *1
+0 If 8
+8 If 9
+9 vazio *1
+0 For 11
+11 For 12
+12 . *1
+@
+Decl
+0
+0 INT 2
+2 INT 3
+3 Var 4
+4 vazio 5
+4 = 6
+6 = 7
+7 Exp 8
+8 vazio 5
+5 . *1
+@
+Digit
+0
+0 0 2
+2 0 3
+3 vazio *1
+0 1 5
+5 1 6
+6 vazio *1
+0 2 8
+8 2 9
+9 vazio *1
+0 3 11
+11 3 12
+12 vazio *1
+0 4 14
+14 4 15
+15 vazio *1
+0 5 17
+17 5 18
+18 vazio *1
+0 6 20
+20 6 21
+21 vazio *1
+0 7 23
+23 7 24
+24 vazio *1
+0 8 26
+26 8 27
+27 vazio *1
+0 9 29
+29 9 30
+30 . *1
+@
+Eb
+0
+0 ( 2
+2 ( 3
+3 Exp 4
+4 ) 5
+5 vazio *1
+0 Num 7
+7 Num 8
+8 vazio *1
+0 Var 10
+10 Var 11
+11 . *1
+@
+Exp
+0
+0 vazio 2
+1 + 3
+3 + 4
+4 vazio 2
+2 - 6
+6 - 7
+7 vazio 2
+2 Eb 3
+3 vazio 4
+4 + 6
+6 + 7
+7 vazio 6
+4 - 9
+9 - 10
+10 vazio 6
+4 * 12
+12 * 13
+13 vazio 6
+4 / 15
+15 / 16
+16 vazio 6
+4 ** 18
+18 ** 19
+19 vazio 6
+6 Eb 6
+6 vazio 4
+4 . *1
+@
+Int
+0
+0 Digit 2
+2 Digit 3
+3 vazio 4
+4 Digit 5
+5 Digit 6
+6 vazio 4
+4 . *1
+@
+Letter
+0
+0 a 2
+2 a 3
+3 vazio *1
+0 b 5
+5 b 6
+6 vazio *1
+0 c 8
+8 c 9
+9 vazio *1
+0 d 11
+11 d 12
+12 vazio *1
+0 e 14
+14 e 15
+15 vazio *1
+0 f 17
+17 f 18
+18 vazio *1
+0 g 20
+20 g 21
+21 vazio *1
+0 h 23
+23 h 24
+24 vazio *1
+0 i 26
+26 i 27
+27 vazio *1
+0 j 29
+29 j 30
+30 vazio *1
+0 k 32
+32 k 33
+33 vazio *1
+0 l 35
+35 l 36
+36 vazio *1
+0 m 38
+38 m 39
+39 vazio *1
+0 n 41
+41 n 42
+42 vazio *1
+0 o 44
+44 o 45
+45 vazio *1
+0 p 47
+47 p 48
+48 vazio *1
+0 q 50
+50 q 51
+51 vazio *1
+0 r 53
+53 r 54
+54 vazio *1
+0 s 56
+56 s 57
+57 vazio *1
+0 t 59
+59 t 60
+60 vazio *1
+0 u 62
+62 u 63
+63 vazio *1
+0 v 65
+65 v 66
+66 vazio *1
+0 w 68
+68 w 69
+69 vazio *1
+0 x 71
+71 x 72
+72 vazio *1
+0 y 74
+74 y 75
+75 vazio *1
+0 z 77
+77 z 78
+78 vazio *1
+0 A 80
+80 A 81
+81 vazio *1
+0 B 83
+83 B 84
+84 vazio *1
+0 C 86
+86 C 87
+87 vazio *1
+0 D 89
+89 D 90
+90 vazio *1
+0 E 92
+92 E 93
+93 vazio *1
+0 F 95
+95 F 96
+96 vazio *1
+0 G 98
+98 G 99
+99 vazio *1
+0 H 101
+101 H 102
+102 vazio *1
+0 I 104
+104 I 105
+105 vazio *1
+0 J 107
+107 J 108
+108 vazio *1
+0 K 110
+110 K 111
+111 vazio *1
+0 L 113
+113 L 114
+114 vazio *1
+0 M 116
+116 M 117
+117 vazio *1
+0 N 119
+119 N 120
+120 vazio *1
+0 O 122
+122 O 123
+123 vazio *1
+0 P 125
+125 P 126
+126 vazio *1
+0 Q 128
+128 Q 129
+129 vazio *1
+0 R 131
+131 R 132
+132 vazio *1
+0 S 134
+134 S 135
+135 vazio *1
+0 T 137
+137 T 138
+138 vazio *1
+0 U 140
+140 U 141
+141 vazio *1
+0 V 143
+143 V 144
+144 vazio *1
+0 W 146
+146 W 147
+147 vazio *1
+0 X 149
+149 X 150
+150 vazio *1
+0 Y 152
+152 Y 153
+153 vazio *1
+0 Z 155
+155 Z 156
+156 . *1
+@
+Num
+0
+0 Int 2
+2 Int 3
+3 . *1
+@
+Var
+0
+0 Letter 2
+2 Letter 3
+3 vazio 4
+4 Letter 5
+5 Letter 6
+6 vazio 4
+4 . *1
+@
+Character
+0
+0 letter 2
+2 letter 3
+3 vazio *1
+0 digit 5
+5 digit 6
+6 . *1
+@
+For
+0
+0 FOR 2
+2 FOR 3
+3 letter 4
+4 vazio 5
+4 digit 6
+6 digit 7
+7 vazio 5
+5 = 6
+6 Exp 7
+7 TO 8
+8 Exp 9
+9 vazio 10
+9 STEP 11
+11 STEP 12
+12 Exp 13
+13 vazio 10
+10 . *1
+@
+If
+0
+0 IF 2
+2 IF 3
+3 Exp 4
+4 >= 6
+6 >= 7
+7 vazio 6
+4 > 9
+9 > 10
+10 vazio 6
+4 < 12
+12 < 13
+13 vazio 6
+4 <= 15
+15 <= 16
+16 vazio 6
+4 == 18
+18 == 19
+19 vazio 6
+6 Exp 6
+6 THEN 7
+7 Block 8
+8 . *1
+@
+Pitem
+0
+0 Exp 2
+2 Exp 3
+3 vazio *1
+0 “ 5
+5 “ 6
+6 Character 7
+7 vazio 8
+8 Character 9
+9 Character 10
+10 vazio 8
+8 ” 9
+9 vazio 10
+9 Exp 11
+11 Exp 12
+12 vazio 10
+10 . *1
+@
+Print
+0
+0 PRINT 2
+2 PRINT 3
+3 vazio 4
+3 Pitem 5
+5 Pitem 6
+6 vazio 7
+7 , 8
+8 , 9
+9 Pitem 10
+10 vazio 7
+7 vazio 8
+7 , 9
+9 , 10
+10 vazio 8
+8 vazio 4
+4 . *1
+@

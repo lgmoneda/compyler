@@ -1,0 +1,23 @@
+Exp
+0
+0 vazio 2
+1 + 3
+3 vazio 2
+2 - 5
+5 vazio 2
+2 Eb 3
+3 vazio 4
+4 + 6
+6 vazio 6
+4 - 8
+8 vazio 6
+4 * 10
+10 vazio 6
+4 / 12
+12 vazio 6
+4 ** 14
+14 vazio 6
+6 Eb 6
+6 vazio 4
+4 . *1
+@

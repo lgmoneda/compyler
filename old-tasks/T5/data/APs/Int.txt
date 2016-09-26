@@ -1,6 +1,8 @@
+Int
 0
-0 Letter 2
+0 Digit 2
 2 vazio 3
-3 Letter 4
+3 Digit 4
 4 vazio 3
 3 . *1
+@

@@ -1,0 +1,18 @@
+0
+0 PRINT 2
+2 PRINT 3
+3 vazio 4
+3 Pitem 5
+5 Pitem 6
+6 vazio 7
+7 , 8
+8 , 9
+9 Pitem 10
+10 vazio 7
+7 vazio 8
+7 , 9
+9 , 10
+10 vazio 8
+8 vazio 4
+4 . *1
+@

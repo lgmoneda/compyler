@@ -21,9 +21,12 @@ class PushdownAutomata(Engine):
 				line = f.next()
 				text_file = open("AF_temporario.txt", "w")
 				while line != "@\n":
-					text_file.write(line)
-					line = f.next()
-				text_file.close()
+					try: 
+						text_file.write(line)
+						line = f.next()
+					except:
+						text_file.close()		
+				#text_file.close()
 				self.submachines.append(FiniteAutomata(name, def_file="AF_temporario.txt", key=self.key))		
 		for submachine in self.submachines:
 			submachine.setSubmachines(self.submachines)

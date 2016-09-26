@@ -97,6 +97,11 @@ class FiniteAutomata(Engine):
 								self.activity["current state"] = transition.get('next')
 								transition_found = True
 								#self.eventsList.pop(0)
+						### T5
+						if transition.get("input") == "vazio":
+							self.activity["current state"] = transition.get('next')
+							transition_found = True
+							self.insertNewEventFirstOrLast(type_=1, content=event["content"], last=False)
 
 
 		if transition_found == False:

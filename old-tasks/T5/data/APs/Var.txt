@@ -1,6 +1,8 @@
+Var
 0
 0 Letter 2
 2 vazio 3
 3 Letter 4
 4 vazio 3
 3 . *1
+@

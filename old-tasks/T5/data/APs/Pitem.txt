@@ -1,0 +1,15 @@
+Pitem
+0
+0 Exp 2
+2 vazio *1
+0 “ 4
+4 Character 5
+5 vazio 6
+6 Character 7
+7 vazio 6
+6 ” 7
+7 vazio 8
+7 Exp 9
+9 vazio 8
+8 . *1
+@

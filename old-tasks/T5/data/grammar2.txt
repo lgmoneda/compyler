@@ -1,4 +1,4 @@
-Program = “ABRA“ { Block } “KADABRA“ .
+Program = = “ABRA“ { Block } “KADABRA“ .
 Block = Decl | Assign | If | For  .
 Decl = “INT“ Var [ “=“ Exp ]  .
 Assign = Var “=“ Exp .

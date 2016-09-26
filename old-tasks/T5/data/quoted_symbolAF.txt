@@ -1,0 +1,8 @@
+s0
+s0 " s1
+s1 letter s2
+s1 numerical s2
+s2 " *s3
+s2 letter s2
+s2 numerical s2
+s2 symbol s2
