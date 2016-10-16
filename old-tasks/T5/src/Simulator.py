@@ -31,7 +31,7 @@ class Simulator(object):
 	def __init__(self, verbose=True):
 		super(Simulator, self).__init__()
 		self.granularity = "char"
-		self.inputFile = "../data/prog1.txt"
+		self.inputFile = "../data/grammarMin.txt"
 		self.input = []
 		self.engines = []
 		self.engines.append(OuterEngine("Outer Engine"))

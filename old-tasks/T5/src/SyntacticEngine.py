@@ -7,7 +7,7 @@ class SyntacticEngine(Engine):
 
 	def __init__(self, name):
 		super(SyntacticEngine, self).__init__(name)
-		self.automata = PushdownAutomata("Pushdown Automata for Wirth Grammar", "../data/my_grammarAP.txt", "value") 
+		self.automata = PushdownAutomata("Pushdown Automata for Wirth Grammar", "../data/wirth_grammarAP.txt", "category") 
 		self.buffer = []
 		self.bufferWord = []
 
@@ -15,6 +15,7 @@ class SyntacticEngine(Engine):
 	def event1Handler(self, event):
 		"""Buffer a token and Create a FA to recognize it 
 		"""
+		
 		for event_ in self.eventsList:
 			self.buffer.append(event_["content"])
 		self.automata.setup(self.buffer, self.granularity, self.verboseOptions)

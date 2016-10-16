@@ -1,6 +1,8 @@
 ABRA
-INT x = 20
-INT y = 20 + 30
+INT x
+x = 20
+INT y
+y = 20 + 30
 IF x < y THEN x = 1
 FOR x = 1 TO 10
     INT caneca = 5

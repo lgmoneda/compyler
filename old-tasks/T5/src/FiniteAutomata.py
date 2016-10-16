@@ -90,7 +90,8 @@ class FiniteAutomata(Engine):
 		print event
 		print self.description
 		print self.activity
-		raw_input()
+		#print(self.eventsList)
+		#raw_input()
 		#print(event["content"][self.key])
 		### Void transitions:
 
@@ -100,7 +101,7 @@ class FiniteAutomata(Engine):
 				if transition.get('current') == self.activity["current state"]: 
 					if transition.get('input') == event["content"][self.key] and transition_found == False:
 						self.activity["current state"] = transition.get('next')
-						
+						print("Consumindo simbolo!")
 						transition_found = True
 						#self.eventsList.pop(0)
 
@@ -109,6 +110,7 @@ class FiniteAutomata(Engine):
 						#print(self.createdAutomata)
 						
 						self.state_counter += 1
+
 						if self.name == "grammar":
 							print(self.createdAutomata)
 							#raw_input()
@@ -122,11 +124,11 @@ class FiniteAutomata(Engine):
 								self.createdAutomata.append(event["content"]["value"])
 								self.createdAutomata.append("0")
 							if event["content"][self.key] == "=":
-								#self.stack.append((self.state, self.state_counter))
-								pass
+								self.stack.append((self.state, self.state_counter))
+								#pass
 							if event["content"][self.key] == ".":
-								self.createdAutomata.append(str(self.state) + " . *1")
-								self.createdAutomata.append("@")
+								self.createdAutomata.append(str(self.state) + " vazio *1")
+								#self.createdAutomata.append("@")
 
 								seen = []
 								for item in self.createdAutomata:
@@ -134,8 +136,45 @@ class FiniteAutomata(Engine):
 										seen.append(item)
 
 								self.createdAutomata = seen
+								"""
+								### Treating void transitions
 
+								for item in self.createdAutomata[2:]:
+									if item.find("vazio"):
+										split = item.split(" ")
+										from_ = split[0]
+										get_to_from = split[-1]
+										if get_to_from[0] == "*":
+											for i in range(2, len(self.createdAutomata)):
+												if  self.createdAutomata[i].split(" ")[-1] == from_:
+													#self.createdAutomata[i] =  self.createdAutomata[i].split(" ")[0] + " " + self.createdAutomata[i].split(" ")[1] + " *" + from_
+													self.createdAutomata.append(self.createdAutomata[i].split(" ")[0] + " " + self.createdAutomata[i].split(" ")[1] + " *" + from_)
+										else:
+											for item2 in self.createdAutomata[2:]:
+												#print item2
+												if item2.split(" ")[0] == get_to_from:
+													self.createdAutomata.append(from_ + " " + item2.split(" ")[1] + " " + item2.split(" ")[2])
+
+								### Deleting all void transitions
+								new_createdAutomata = []
+								
+								to_pop = []
+								for i in range(len(self.createdAutomata)):
+									if self.createdAutomata[i].find("vazio") < 0:
+										to_pop.append(i)
+								
+								new_createdAutomata = []
+								for i in range(len(self.createdAutomata)):
+									if i in to_pop:
+										new_createdAutomata.append(self.createdAutomata[i])		
+								self.createdAutomata = list(new_createdAutomata)
+								#self.createdAutomata.pop(to_pop)
+								
+								"""
+								#new_createdAutomata.append("@")
+								self.createdAutomata.append("@")
 								text_file = open("../data/APs/" + self.createdAutomata[0] + ".txt", "w")
+								#for line in new_createdAutomata:
 								for line in self.createdAutomata:
 									text_file.write(line)
 									text_file.write("\n")
@@ -152,11 +191,14 @@ class FiniteAutomata(Engine):
 															+ " " + str(self.state_counter - 1))
 								self.state = self.state_counter - 1
 							if event["content"][self.key] == "TERM":
+
+								#self.state = self.state_counter - 1
 								without_quotes = str(event["content"]["value"][3:-3]) 
 								self.createdAutomata.append(str(self.state) + 
 															" " + 
 															without_quotes
 															+ " " + str(self.state_counter - 1))
+								
 								self.state = self.state_counter - 1
 							if event["content"][self.key] == "(":
 								self.stack.append((self.state, self.state_counter))
@@ -187,12 +229,17 @@ class FiniteAutomata(Engine):
 									next_state = "*1"
 								else:
 									next_state = str(self.stack[-1][1])
+								### aas
 								self.createdAutomata.append(str(self.state) + 
 															" vazio " + 
 															next_state)
 								self.state = self.stack[-1][1]
+								#self.state = next_state
+								#self.state = 3333
 								self.stack.pop(-1) 
-								self.state_counter -= 1
+
+								### 
+								#self.state_counter -= 1
 							if event["content"][self.key] == "[":
 								self.stack.append((self.state, self.state_counter - 1))
 								if self.stack[-1][1] == 1:
@@ -222,13 +269,27 @@ class FiniteAutomata(Engine):
 															" vazio " + 
 															next_state)
 								self.state = self.stack[-1][0]
+								self.state_counter -= 1
+						if self.name == "grammar" or self.name == "exp":
+							print "Situacao: "
+							print event["content"][self.key]
+							print event["content"]["value"]
+							print self.state_counter
+							print self.state
+							#raw_input()
 
 					else:
+						pass
+						"""
 						#Call submachine
 						for submachine in self.submachines:
 							if transition.get('input') == submachine.name and transition_found == False:
+								
+								self.insertNewEventFirstOrLast(
+									type_=3, content=event["content"], last=False)
 								self.insertNewEventFirstOrLast(
 									type_=3, content=transition.get('input'), last=False)
+
 								self.activity["current state"] = transition.get('next')
 								transition_found = True
 								#self.eventsList.pop(0)
@@ -238,24 +299,57 @@ class FiniteAutomata(Engine):
 							self.activity["current state"] = transition.get('next')
 							transition_found = True
 							self.insertNewEventFirstOrLast(type_=1, content=event["content"], last=False)
-				
+						"""
+		
+		if transition_found == False:		
+			for transition in self.description["transitions"]:
+					if transition.get('current') == self.activity["current state"] and transition_found == False: 
+						#Call submachine
+						for submachine in self.submachines:
+							if transition.get('input') == submachine.name:
+								
+								self.insertNewEventFirstOrLast(
+									type_=3, content=event["content"], last=False)
+								self.insertNewEventFirstOrLast(
+									type_=3, content=transition.get('input'), last=False)
+
+								self.activity["current state"] = transition.get('next')
+								transition_found = True
+								#self.eventsList.pop(0)
+						### T5
+						if transition.get("input") == "vazio" and transition_found == False:
+							print("ENTREI AQUI VAZIO")
+							self.activity["current state"] = transition.get('next')
+							transition_found = True
+							self.insertNewEventFirstOrLast(type_=1, content=event["content"], last=False)
+
 
 		if transition_found == False:
 			self.insertNewEventFirstOrLast(type_=1, content=event["content"], last=False)
 			self.insertNewEventFirstOrLast(type_=4, content=event["content"], last=False)
 
-		if len(self.eventsList) == 0:
+		if len(self.eventsList) == 0:	
+			transition_found = False
+			print(self.activity)
+			for transition in self.description["transitions"]:
+				if transition.get('current') == self.activity["current state"]:
+					if transition.get("input") == "vazio" and transition_found == False:
+						self.activity["current state"] = transition.get('next')
+						transition_found = True
+
+			print(self.activity)
 			self.insertNewEventFirstOrLast(content=event["content"], type_=5)	
 
 	#Chamada de submaquina
 	def event3Handler(self, event):
-		#self.eventsList.pop(0)
+		self.eventsList.pop(0)
 		nextInput = []
 		for submachine in self.submachines:
 			if submachine.name == event["content"]: 
 				nextMachine = copy.deepcopy(submachine)
 		for event_ in self.eventsList:
 			nextInput.append(event_["content"])
+			#nextInput.append(event_)
 		nextMachine.setup(nextInput, self.granularity, self.verboseOptions)
 		nextMachine.activity["current state"] = nextMachine.description["initial"] 
 		#nextMachine.setEventsList(self.eventsList)

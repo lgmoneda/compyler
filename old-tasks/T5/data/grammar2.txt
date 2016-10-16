@@ -1,16 +1,13 @@
-Program = = “ABRA“ { Block } “KADABRA“ .
-Block = Decl | Assign | If | For  .
-Decl = “INT“ Var [ “=“ Exp ]  .
-Assign = Var “=“ Exp .
-Int = Digit { Digit } .
-Var = Letter { Letter } .
-Num = Int .
+Program = “ABRA“ { Block } “KADABRA“ .
+Block = “INT“ Var [ “=“ Exp ] | Var “=“ Exp | “IF” Exp ( “>=” | “>” | “<” | “<=” | “==” ) Exp “THEN” Block | “FOR” letter [ digit ] “=” Exp “TO” Exp [ “STEP” Exp ] .
+Var = “a” | “b” | “c” | “d” | “e” | “f” | “g” | “h” | “i” | “j” | “k” | “l” | “m” | “n” | “o” | “p” | “q” | “r” | “s” | “t” | “u” | “v” | “w” | “x” | “y” | “z” | “A” | “B” | “C” | “D” | “E” | “F” | “G” | “H” | “I” | “J” | “K” | “L” | “M” | “N” | “O” | “P” | “Q” | “R” | “S” | “T” | “U” | “V” | “W” | “X” | “Y” | “Z” { “a” | “b” | “c” | “d” | “e” | “f” | “g” | “h” | “i” | “j” | “k” | “l” | “m” | “n” | “o” | “p” | “q” | “r” | “s” | “t” | “u” | “v” | “w” | “x” | “y” | “z” | “A” | “B” | “C” | “D” | “E” | “F” | “G” | “H” | “I” | “J” | “K” | “L” | “M” | “N” | “O” | “P” | “Q” | “R” | “S” | “T” | “U” | “V” | “W” | “X” | “Y” | “Z” } .
+Num = “0” | “1” | “2” | “3” | “4” | “5” | “6” | “7” | “8” | “9” { “0” | “1” | “2” | “3” | “4” | “5” | “6” | “7” | “8” | “9” } .
 Exp = { “+” | “-” } Eb { ( “+” | “-” | “*” | “/” | “**” ) Eb } .
-Eb = “(” Exp “)” | Num | Var .
+Eb = “(” Exp “)” | “0” | “1” | “2” | “3” | “4” | “5” | “6” | “7” | “8” | “9” { “0” | “1” | “2” | “3” | “4” | “5” | “6” | “7” | “8” | “9” } | “a” | “b” | “c” | “d” | “e” | “f” | “g” | “h” | “i” | “j” | “k” | “l” | “m” | “n” | “o” | “p” | “q” | “r” | “s” | “t” | “u” | “v” | “w” | “x” | “y” | “z” | “A” | “B” | “C” | “D” | “E” | “F” | “G” | “H” | “I” | “J” | “K” | “L” | “M” | “N” | “O” | “P” | “Q” | “R” | “S” | “T” | “U” | “V” | “W” | “X” | “Y” | “Z” { “a” | “b” | “c” | “d” | “e” | “f” | “g” | “h” | “i” | “j” | “k” | “l” | “m” | “n” | “o” | “p” | “q” | “r” | “s” | “t” | “u” | “v” | “w” | “x” | “y” | “z” | “A” | “B” | “C” | “D” | “E” | “F” | “G” | “H” | “I” | “J” | “K” | “L” | “M” | “N” | “O” | “P” | “Q” | “R” | “S” | “T” | “U” | “V” | “W” | “X” | “Y” | “Z” } .
 Digit = “0” | “1” | “2” | “3” | “4” | “5” | “6” | “7” | “8” | “9” .
 Letter = “a” | “b” | “c” | “d” | “e” | “f” | “g” | “h” | “i” | “j” | “k” | “l” | “m” | “n” | “o” | “p” | “q” | “r” | “s” | “t” | “u” | “v” | “w” | “x” | “y” | “z” | “A” | “B” | “C” | “D” | “E” | “F” | “G” | “H” | “I” | “J” | “K” | “L” | “M” | “N” | “O” | “P” | “Q” | “R” | “S” | “T” | “U” | “V” | “W” | “X” | “Y” | “Z” .
 Print = “PRINT” [ Pitem { “,” Pitem } [ “,” ] ]  .
-Pitem = Exp | ““” Character { Character } “”” [ Exp ] .
-Character = letter | digit .
+Pitem = { “+” | “-” } Eb { ( “+” | “-” | “*” | “/” | “**” ) Eb } . | ““” Character { Character } “”” [ { “+” | “-” } Eb { ( “+” | “-” | “*” | “/” | “**” ) Eb } . ] .
+Character = “a” | “b” | “c” | “d” | “e” | “f” | “g” | “h” | “i” | “j” | “k” | “l” | “m” | “n” | “o” | “p” | “q” | “r” | “s” | “t” | “u” | “v” | “w” | “x” | “y” | “z” | “A” | “B” | “C” | “D” | “E” | “F” | “G” | “H” | “I” | “J” | “K” | “L” | “M” | “N” | “O” | “P” | “Q” | “R” | “S” | “T” | “U” | “V” | “W” | “X” | “Y” | “Z”| “0” | “1” | “2” | “3” | “4” | “5” | “6” | “7” | “8” | “9” .
 If = “IF” Exp ( “>=” | “>” | “<” | “<=” | “==” ) Exp “THEN” Block .
 For = “FOR” letter [ digit ] “=” Exp “TO” Exp [ “STEP” Exp ] . 
