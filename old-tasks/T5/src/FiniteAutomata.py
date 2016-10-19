@@ -143,6 +143,7 @@ class FiniteAutomata(Engine):
 									#there_are_voids = False
 
 								### Absorvendo estado final
+								
 								repeat = 1
 								while(repeat > 0):
 									for item in self.createdAutomata[2:]:
@@ -157,8 +158,27 @@ class FiniteAutomata(Engine):
 														self.createdAutomata[i] =  self.createdAutomata[i].split(" ")[0] + " " + self.createdAutomata[i].split(" ")[1] + " *" + from_
 														print(self.createdAutomata[i])
 														repeat += 1
-														raw_input()
+														#raw_input()
 									repeat -= 1
+								for item in self.createdAutomata[2:]:
+									if item.split(" ")[1] == "vazio":
+										there_are_voids = True
+										split = item.split(" ")
+										from_ = split[0]
+										get_to_from = split[-1]
+										print("Item que gerou substituicao: ")
+										print(item)
+										for i in range(2, len(self.createdAutomata)):
+											if self.createdAutomata[i].split(" ")[0] == get_to_from[-1]:
+												self.createdAutomata.append(from_ + " " + self.createdAutomata[i].split(" ")[1] + " " + self.createdAutomata[i].split(" ")[-1])
+												#self.createdAutomata[i] = from_ + " " + self.createdAutomata[i].split(" ")[1] + " " + self.createdAutomata[i].split(" ")[-1]
+												print("substituindo: ")
+												print(from_)
+												print("A substituicao: ")
+												print(self.createdAutomata[i])
+
+
+								
 
 								"""
 								for item in self.createdAutomata[2:]:
@@ -233,7 +253,7 @@ class FiniteAutomata(Engine):
 												if item2.split(" ")[0] == get_to_from:
 													self.createdAutomata.append(from_ + " " + item2.split(" ")[1] + " " + item2.split(" ")[2])
 								"""
-								"""
+								
 								### Deleting all void transitions
 								new_createdAutomata = []
 								
@@ -248,7 +268,7 @@ class FiniteAutomata(Engine):
 										new_createdAutomata.append(self.createdAutomata[i])		
 								self.createdAutomata = list(new_createdAutomata)
 								#self.createdAutomata.pop(to_pop)
-								"""
+								
 								
 								#new_createdAutomata.append("@")
 								self.createdAutomata.append("@")
