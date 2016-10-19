@@ -124,7 +124,7 @@ class FiniteAutomata(Engine):
 								self.createdAutomata.append(event["content"]["value"])
 								self.createdAutomata.append("0")
 							if event["content"][self.key] == "=":
-								self.stack.append((self.state, self.state_counter))
+								self.stack.append((self.state, self.state_counter - 1))
 								#pass
 							if event["content"][self.key] == ".":
 								self.createdAutomata.append(str(self.state) + " vazio *1")
@@ -136,9 +136,87 @@ class FiniteAutomata(Engine):
 										seen.append(item)
 
 								self.createdAutomata = seen
-								"""
+								
 								### Treating void transitions
+								there_are_voids = True
+								#while(there_are_voids):
+									#there_are_voids = False
 
+								### Absorvendo estado final
+								repeat = 1
+								while(repeat > 0):
+									for item in self.createdAutomata[2:]:
+										if item.split(" ")[1] == "vazio":
+											there_are_voids = True
+											split = item.split(" ")
+											from_ = split[0]
+											get_to_from = split[-1]
+											if get_to_from[0] == "*":
+												for i in range(2, len(self.createdAutomata)):
+												 	if self.createdAutomata[i].split(" ")[-1] == from_:
+														self.createdAutomata[i] =  self.createdAutomata[i].split(" ")[0] + " " + self.createdAutomata[i].split(" ")[1] + " *" + from_
+														print(self.createdAutomata[i])
+														repeat += 1
+														raw_input()
+									repeat -= 1
+
+								"""
+								for item in self.createdAutomata[2:]:
+									if item.split(" ")[1] == "vazio":
+										there_are_voids = True
+										split = item.split(" ")
+										from_ = split[0]
+										get_to_from = split[-1]
+										print("Item que gerou substituicao: ")
+										print(item)
+										for i in range(2, len(self.createdAutomata)):
+											if self.createdAutomata[i].split(" ")[0] == get_to_from[-1]:
+												self.createdAutomata[i] = from_ + " " + self.createdAutomata[i].split(" ")[1] + " " + self.createdAutomata[i].split(" ")[-1]
+												print("substituindo: ")
+												print(from_)
+												print("A substituicao: ")
+												print(self.createdAutomata[i])
+												raw_input()
+											if self.createdAutomata[i].split(" ")[-1] == get_to_from[-1]:
+												self.createdAutomata[i] = self.createdAutomata[i].split(" ")[0] + " " + self.createdAutomata[i].split(" ")[1] + " " + from_
+												print("substituindo: ")
+												print(from_)
+												print("A substituicao: ")
+												print(self.createdAutomata[i])
+												raw_input()
+											if get_to_from[0] == "*" and self.createdAutomata[i].split(" ")[-1] == from_:
+												self.createdAutomata[i] =  self.createdAutomata[i].split(" ")[0] + " " + self.createdAutomata[i].split(" ")[1] + " *" + from_
+											#	print("substituindo: ")
+											#	print(from_)
+											#	print("A substituicao: ")
+											#	print(self.createdAutomata[i])
+												raw_input()
+								"""
+								"""												
+								for item in self.createdAutomata[2:]:
+									if item.split(" ")[1] == "vazio":
+										split = item.split(" ")
+										from_ = split[0]
+										get_to_from = split[-1]
+										print("Item que gerou substituicao: ")
+										print(item)
+										for i in range(2, len(self.createdAutomata)):
+											if self.createdAutomata[i].split(" ")[0] == from_:
+												self.createdAutomata[i] = get_to_from[-1] + " " + self.createdAutomata[i].split(" ")[1] + " " + self.createdAutomata[i].split(" ")[-1]
+												print("substituindo: ")
+												print(from_)
+												print("A substituicao: ")
+												print(self.createdAutomata[i])
+												#raw_input()
+											if self.createdAutomata[i].split(" ")[-1] == from_:
+												self.createdAutomata[i] =  self.createdAutomata[i].split(" ")[0] + " " + self.createdAutomata[i].split(" ")[1] + " " + get_to_from
+												print("substituindo: ")
+												print(from_)
+												print("A substituicao: ")
+												print(self.createdAutomata[i])
+												#raw_input()
+
+								
 								for item in self.createdAutomata[2:]:
 									if item.find("vazio"):
 										split = item.split(" ")
@@ -154,7 +232,8 @@ class FiniteAutomata(Engine):
 												#print item2
 												if item2.split(" ")[0] == get_to_from:
 													self.createdAutomata.append(from_ + " " + item2.split(" ")[1] + " " + item2.split(" ")[2])
-
+								"""
+								"""
 								### Deleting all void transitions
 								new_createdAutomata = []
 								
@@ -169,8 +248,8 @@ class FiniteAutomata(Engine):
 										new_createdAutomata.append(self.createdAutomata[i])		
 								self.createdAutomata = list(new_createdAutomata)
 								#self.createdAutomata.pop(to_pop)
-								
 								"""
+								
 								#new_createdAutomata.append("@")
 								self.createdAutomata.append("@")
 								text_file = open("../data/APs/" + self.createdAutomata[0] + ".txt", "w")
@@ -270,6 +349,7 @@ class FiniteAutomata(Engine):
 															next_state)
 								self.state = self.stack[-1][0]
 								self.state_counter -= 1
+
 						if self.name == "grammar" or self.name == "exp":
 							print "Situacao: "
 							print event["content"][self.key]
