@@ -110,6 +110,8 @@ class FiniteAutomata(Engine):
 						#print(self.createdAutomata)
 						
 						self.state_counter += 1
+						print(self.stack)
+						raw_input()
 
 						if self.name == "grammar":
 							print(self.createdAutomata)
@@ -179,7 +181,7 @@ class FiniteAutomata(Engine):
 
 
 								
-
+								### Acima funcionando
 								"""
 								for item in self.createdAutomata[2:]:
 									if item.split(" ")[1] == "vazio":
@@ -254,6 +256,8 @@ class FiniteAutomata(Engine):
 													self.createdAutomata.append(from_ + " " + item2.split(" ")[1] + " " + item2.split(" ")[2])
 								"""
 								
+
+								"""
 								### Deleting all void transitions
 								new_createdAutomata = []
 								
@@ -268,7 +272,7 @@ class FiniteAutomata(Engine):
 										new_createdAutomata.append(self.createdAutomata[i])		
 								self.createdAutomata = list(new_createdAutomata)
 								#self.createdAutomata.pop(to_pop)
-								
+								"""
 								
 								#new_createdAutomata.append("@")
 								self.createdAutomata.append("@")
@@ -300,8 +304,16 @@ class FiniteAutomata(Engine):
 								
 								self.state = self.state_counter - 1
 							if event["content"][self.key] == "(":
-								self.stack.append((self.state, self.state_counter))
+								self.stack.append((self.state, self.state_counter - 1))
+								#self.state = self.state_counter
 							if event["content"][self.key] == ")":
+
+								print "Situacao: "
+								print event["content"][self.key]
+								print event["content"]["value"]
+								print self.state_counter
+								print self.state
+
 								if self.stack[-1][1] == 1:
 									next_state = "*1"
 								else:
@@ -313,8 +325,15 @@ class FiniteAutomata(Engine):
 								self.stack.pop(-1) 
 								self.state_counter -= 1
 
+								print "Situacao: "
+								print event["content"][self.key]
+								print event["content"]["value"]
+								print self.state_counter
+								print self.state
+								raw_input()
 							if event["content"][self.key] == "{":
 								self.stack.append((self.state_counter - 1, self.state_counter - 1))
+
 								if self.stack[-1][1] == 1:
 									next_state = "*1"
 								else:
@@ -322,7 +341,8 @@ class FiniteAutomata(Engine):
 								self.createdAutomata.append(str(self.state) + 
 															" vazio " + 
 															next_state)
-								self.state += 1
+
+								self.state = self.state_counter - 1
 							if event["content"][self.key] == "}":
 								if self.stack[-1][1] == 1:
 									next_state = "*1"
@@ -455,13 +475,14 @@ class FiniteAutomata(Engine):
 		#nextMachine.setEventsList(self.eventsList)
 
 		### T5
-		#nextMachine.state = self.state_counter
+		nextMachine.state = self.state
 		nextMachine.state_counter = self.state_counter
 
 		result = nextMachine.run() 
 
 		###
 		self.state = nextMachine.state
+		self.state_counter = nextMachine.state_counter
 
 		self.createdAutomata += nextMachine.createdAutomata
 
