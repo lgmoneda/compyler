@@ -88,8 +88,9 @@ class FiniteAutomata(Engine):
 		transition_found = False
 		print "Event: ",
 		print event
-		print self.description
-		print self.activity
+		#print self.description
+		#print self.activity
+		
 		#print(self.eventsList)
 		#raw_input()
 		#print(event["content"][self.key])
@@ -111,7 +112,7 @@ class FiniteAutomata(Engine):
 						
 						self.state_counter += 1
 						print(self.stack)
-						raw_input()
+						#raw_input()
 
 						if self.name == "grammar":
 							print(self.createdAutomata)
@@ -124,7 +125,8 @@ class FiniteAutomata(Engine):
 
 								self.state_counter += 1
 								self.createdAutomata.append(event["content"]["value"])
-								self.createdAutomata.append("0")
+								#self.createdAutomata.append("0")
+								self.createdAutomata.append(str(self.state))
 							if event["content"][self.key] == "=":
 								self.stack.append((self.state, self.state_counter - 1))
 								#pass
@@ -162,23 +164,35 @@ class FiniteAutomata(Engine):
 														repeat += 1
 														#raw_input()
 									repeat -= 1
-								for item in self.createdAutomata[2:]:
-									if item.split(" ")[1] == "vazio":
-										there_are_voids = True
-										split = item.split(" ")
-										from_ = split[0]
-										get_to_from = split[-1]
-										print("Item que gerou substituicao: ")
-										print(item)
-										for i in range(2, len(self.createdAutomata)):
-											if self.createdAutomata[i].split(" ")[0] == get_to_from[-1]:
-												self.createdAutomata.append(from_ + " " + self.createdAutomata[i].split(" ")[1] + " " + self.createdAutomata[i].split(" ")[-1])
-												#self.createdAutomata[i] = from_ + " " + self.createdAutomata[i].split(" ")[1] + " " + self.createdAutomata[i].split(" ")[-1]
-												print("substituindo: ")
-												print(from_)
-												print("A substituicao: ")
-												print(self.createdAutomata[i])
 
+								### Absorvendo transicoes
+								"""
+								repeat = 1
+								while(repeat > 0):
+									exclude = []
+									for item in reversed(self.createdAutomata[2:]):
+										if item.split(" ")[1] == "vazio":
+											there_are_voids = True
+											split = item.split(" ")
+											from_ = split[0]
+											get_to_from = split[-1]
+											print("Item que gerou substituicao: ")
+											print(item)
+											for i in range(2, len(self.createdAutomata)):
+												if self.createdAutomata[i].split(" ")[0] == get_to_from[-1]:
+													self.createdAutomata.append(from_ + " " + self.createdAutomata[i].split(" ")[1] + " " + self.createdAutomata[i].split(" ")[-1])
+													#self.createdAutomata[i] = from_ + " " + self.createdAutomata[i].split(" ")[1] + " " + self.createdAutomata[i].split(" ")[-1]
+													#print("substituindo: ")
+													#print(from_)
+													#print("A substituicao: ")
+													print(self.createdAutomata[i])
+													#exclude.append(i)
+													#repeat +=1
+									#for ex in exclude:
+									#	self.createdAutomata.pop(ex)
+									repeat -= 1
+
+								"""
 
 								
 								### Acima funcionando
@@ -283,6 +297,10 @@ class FiniteAutomata(Engine):
 									text_file.write("\n")
 								text_file.close()
 
+								self.state = 0
+								self.state_counter = 1
+								self.stack = []
+
 						elif self.name == "exp":
 							print(self.createdAutomata)
 							#print(self.eventsList)
@@ -330,7 +348,7 @@ class FiniteAutomata(Engine):
 								print event["content"]["value"]
 								print self.state_counter
 								print self.state
-								raw_input()
+								#raw_input()
 							if event["content"][self.key] == "{":
 								self.stack.append((self.state_counter - 1, self.state_counter - 1))
 
@@ -475,6 +493,8 @@ class FiniteAutomata(Engine):
 		#nextMachine.setEventsList(self.eventsList)
 
 		### T5
+
+		nextMachine.stack = self.stack
 		nextMachine.state = self.state
 		nextMachine.state_counter = self.state_counter
 
@@ -483,6 +503,7 @@ class FiniteAutomata(Engine):
 		###
 		self.state = nextMachine.state
 		self.state_counter = nextMachine.state_counter
+		self.stack = nextMachine.stack
 
 		self.createdAutomata += nextMachine.createdAutomata
 

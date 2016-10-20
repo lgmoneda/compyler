@@ -7,8 +7,8 @@ class SyntacticEngine(Engine):
 
 	def __init__(self, name):
 		super(SyntacticEngine, self).__init__(name)
-		self.automata = PushdownAutomata("Pushdown Automata for Wirth Grammar", "../data/wirth_grammarAP.txt", "category") 
-		#self.automata = PushdownAutomata("Pushdown Automata for Wirth Grammar", "../data/my_grammarAP.txt", "value") 
+		#self.automata = PushdownAutomata("Pushdown Automata for Wirth Grammar", "../data/wirth_grammarAP.txt", "category") 
+		self.automata = PushdownAutomata("Pushdown Automata for ABRA KADABRA's programs", "../data/my_grammarAP.txt", "value") 
 		self.buffer = []
 		self.bufferWord = []
 
